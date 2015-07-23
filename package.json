@@ -1,0 +1,17 @@
+{
+  "name": "chat-server",
+  "description": "A chat server for reactive js demo",
+  "private": true,
+  "dependencies": {
+    "socket.io": "*",
+    "express": "*",
+    "lodash": "*"
+  },
+  "scripts": {
+    "start": "node app"
+  },
+  "devDependencies": {
+    "socket.io-client": "*",
+    "rx": "*"
+  }
+}
