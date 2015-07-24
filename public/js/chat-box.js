@@ -32,9 +32,9 @@ var ChatBox = React.createClass({
       that.setState({typing: isTyping})
     });
   },
-  onKeyUpSubject: new Rx.Subject(),
   detectTyping: function() {
     var that = this;
+    this.onKeyUpSubject = new Rx.Subject();
 
     // when you are typing
     this.keyUpStream()
@@ -50,23 +50,29 @@ var ChatBox = React.createClass({
     // for sending a message
     this.keyUpStream()
       .filter(function(data) {
-        return data[0] === 13;
+        return data[0] === 13 && data[1].length;
       })
       .forEach(function(data) {
-        var message = data[1];
-        ChatServer.sendMessage(that.props.currentUser, message);
-        that.props.onMessageSent(message);
-        that.setState({inputValue: '', typing: false});
+        that.sendOneMessage(data[1])
       });
   },
+  sendOneMessage: function(message) {
+    ChatServer.sendMessage(this.props.currentUser, message);
+    this.setState({inputValue: '', typing: false});
+    this.props.onMessageSent(message);
+  },
   keyUpStream: function() {
-    return this.onKeyUpSubject.asObservable()
+    return this.onKeyUpSubject.asObservable();
   },
   onKeyUp: function(e) {
     this.onKeyUpSubject.onNext([e.keyCode, e.target.value]);
   },
-  handleChange: function(e) {
+  handleInputKeyChange: function(e) {
     this.setState({inputValue: e.target.value});
+  },
+  onSendButtonClick: function() {
+    // we just simulate an enter click
+    this.onKeyUpSubject.onNext([13, this.refs.theMessageInput.getDOMNode().value]);
   },
   render: function() {
     var that = this;
@@ -94,17 +100,21 @@ var ChatBox = React.createClass({
             <div className="panel-footer">
                 <div className="input-group">
                     <input 
-                      id="btn-input" 
-                      type="text" 
-                      className="form-control input" 
-                      placeholder="Type your message here..."
-                      ref="theInput"
-                      value={this.state.inputValue}
-                      onKeyUp={this.onKeyUp}
-                      onChange={this.handleChange} />
+                        id="btn-input" 
+                        type="text" 
+                        className="form-control input" 
+                        placeholder="Type your message here..."
+                        ref="theMessageInput"
+                        value={this.state.inputValue}
+                        onKeyUp={this.onKeyUp}
+                        onChange={this.handleInputKeyChange} />
                     <span className="input-group-btn">
-                        <button className="btn btn-success" id="btn-chat">
-                            Send</button>
+                        <button 
+                            className="btn btn-success" 
+                            id="btn-chat"
+                            onClick={this.onSendButtonClick}>
+                          Send
+                        </button>
                     </span>
                 </div>
             </div>
