@@ -5,7 +5,8 @@ var App = React.createClass({
       initialized: false,
       currentUser: null,
       messages: {},
-      myUsername: ''
+      myUsername: '',
+      totalUsers: 0
     };
   },
   componentDidMount: function() {
@@ -16,20 +17,22 @@ var App = React.createClass({
       that.setState({
         initialized: true,
         users: info.users,
-        myUsername: info.username
+        myUsername: info.username,
+        totalUsers: info.total_users
       })
     });
 
     ChatServer.connections().forEach(function(info) {
       that.state.users.push(info.username)
-      that.setState({users: that.state.users})
+      that.setState({users: that.state.users, totalUsers: info.total_users})
     });
 
     ChatServer.disconnections().forEach(function(user) {
       that.state.users.splice(that.state.users.indexOf(user), 1)
       that.setState({
         users: that.state.users,
-        currentUser: that.state.currentUser == user ? null : that.state.currentUser
+        currentUser: that.state.currentUser == user ? null : that.state.currentUser,
+        totalUsers: that.state.totalUsers - 1
       })
     });
 
@@ -102,6 +105,7 @@ var App = React.createClass({
           <Navbar myUsername={this.state.myUsername} />
           <div className="container" id="main-container">
             <div className="row">
+              <p>{this.state.totalUsers}</p>
               <ChatRoster 
                 onCurrentUserChange={this.onCurrentUserChange} 
                 users={this.state.users}

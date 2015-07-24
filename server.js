@@ -74,7 +74,8 @@ module.exports = function(io) {
       username: socket.username,
       users: users
         .filter(function(s) {return s != socket})
-        .map(function(s) {return s.username})
+        .map(function(s) {return s.username}),
+      total_users: users.length
     })
   }
 
