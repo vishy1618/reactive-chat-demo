@@ -41,7 +41,7 @@ var ChatBox = React.createClass({
       .debounce(300)
       .filter(function(data) {return data[0] != 13})
       .forEach(function(data) {
-        ChatServer.isTyping();
+        ChatServer.isTyping(that.props.currentUser);
       })
   },
   sendMessages: function() {
@@ -119,7 +119,6 @@ var ChatBox = React.createClass({
     )
 
     return this.props.currentUser ? chatbox : noUser;
-
   }
 })
 

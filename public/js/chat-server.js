@@ -46,11 +46,11 @@ var ChatServer = {
       })
     })
   },
-  isTyping: function() {
+  isTyping: function(to) {
     var that = this
 
     return new Promise(function(resolve, reject) {
-      that.client.emit('is typing', function() {
+      that.client.emit('is typing', to, function() {
         resolve()
       })
     })

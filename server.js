@@ -59,8 +59,10 @@ module.exports = function(io) {
   }
 
   var handleIsTyping = function(socket) {
-    socket.on('is typing', function() {
-      socket.broadcast.emit('typing', socket.username)
+    socket.on('is typing', function(user) {
+      var recipient = _.find(users, {username: user})
+
+      recipient.emit('typing', socket.username)
     })
   }
 
