@@ -80,10 +80,12 @@ var ChatBox = React.createClass({
             <div className="panel-body">
                 <ul className="chat clearfix">
                     {
-                      this.props.messages && this.props.messages.map(function(msg) {
-                        return <ChatBlock message={msg} 
+                      this.props.messages && this.props.messages.map(function(msg, index) {
+                        return <ChatBlock 
+                          message={msg} 
                           myUsername={that.props.myUsername} 
-                          currentUser={that.props.currentUser} />
+                          currentUser={that.props.currentUser}
+                          key={index} />
                       })
                     }
                 </ul>

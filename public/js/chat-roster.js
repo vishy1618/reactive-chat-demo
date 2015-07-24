@@ -15,7 +15,8 @@ var ChatRoster = React.createClass({
               return (
                 <a  data-user={user} 
                     className={"list-group-item" + (user === currentUser ? ' active' : '')}
-                    onClick={that.onUserSelect}>
+                    onClick={that.onUserSelect}
+                    key={user}>
                   {user}
                 </a>
               )

@@ -10,6 +10,13 @@ var App = React.createClass({
     };
   },
   componentDidMount: function() {
+    this.initializeApp();
+    this.handleConnections();
+    this.handleDisconnections();
+    this.handleIncomingMessages();
+    this.handleUsernameChanges();
+  },
+  initializeApp: function() {
     var that = this;
 
     ChatServer.init()
@@ -21,11 +28,17 @@ var App = React.createClass({
         totalUsers: info.total_users
       })
     });
+  },
+  handleConnections: function() {
+    var that = this;
 
     ChatServer.connections().forEach(function(info) {
       that.state.users.push(info.username)
       that.setState({users: that.state.users, totalUsers: info.total_users})
     });
+  },
+  handleDisconnections: function() {
+    var that = this;
 
     ChatServer.disconnections().forEach(function(user) {
       that.state.users.splice(that.state.users.indexOf(user), 1)
@@ -35,6 +48,9 @@ var App = React.createClass({
         totalUsers: that.state.totalUsers - 1
       })
     });
+  },
+  handleIncomingMessages: function() {
+    var that = this;
 
     // for receiving a message
     ChatServer.messages()
@@ -45,7 +61,10 @@ var App = React.createClass({
 
         that.setState({messages: messages});
       });
-
+  },
+  handleUsernameChanges: function() {
+    var that = this;
+    
     ChatServer.usernameChanges()
       .forEach(function(data) {
         var oldUsername = data.old_username;
