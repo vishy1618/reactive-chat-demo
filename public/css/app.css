@@ -1,0 +1,61 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,700,500italic,900,700italic,900italic);
+
+
+/*
+=====================================
+        Bootstrap overrides
+=====================================
+*/
+
+.panel-primary>.panel-heading {
+  color: #fff;
+  background-color: #33B74C;
+  border-color: #3FB155;
+}
+
+.panel-primary {
+  border-color: #3FB155; 
+}
+
+.list-group-item.active,
+.list-group-item.active:focus,
+.list-group-item.active:hover {
+  background-color: #33B74C;
+  border-color: #3FB155; 
+}
+
+
+/*
+=====================================
+                Base
+=====================================
+*/
+
+body {
+	background: #2D353C;
+	font-family: 'Roboto', sans-serif;
+	line-height: 1.2;
+  color: #fff;
+}
+
+#main-container {
+	margin-top: 70px;
+}
+
+
+/*
+=====================================
+            Helpers
+=====================================
+*/
+
+
+.text-ellipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.v-hidden {
+  visibility: hidden;
+}

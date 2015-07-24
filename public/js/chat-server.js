@@ -1,3 +1,5 @@
+var fromEvent  = Rx.Observable.fromEvent;
+
 var ChatServer = {
   init: function() {
     var client = this.client = io("http://localhost:3000")
@@ -20,6 +22,9 @@ var ChatServer = {
   messages: function() {
     return fromEvent(this.client, 'message')
   },
+  typing: function() {
+    return fromEvent(this.client, 'typing')
+  },
   setUsername: function(username) {
     var that = this
 
@@ -37,6 +42,15 @@ var ChatServer = {
 
     return new Promise(function(resolve, reject) {
       that.client.emit('message', {to: to, message: message}, function() {
+        resolve()
+      })
+    })
+  },
+  isTyping: function() {
+    var that = this
+
+    return new Promise(function(resolve, reject) {
+      that.client.emit('is typing', function() {
         resolve()
       })
     })

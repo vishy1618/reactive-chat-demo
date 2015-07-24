@@ -1,0 +1,97 @@
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li
+{
+    margin-bottom: 20px;
+    padding: 10px;
+    display: block;
+    width: 60%;
+    background: #ececec;
+    min-height: 73px;
+    animation:fly-in-from-left .5s 0s ease both;
+    transform-origin:top left;
+}
+
+.chat li.left {
+    float: left;
+}
+.chat li.right {
+    float: right;
+    animation-name:fly-in-from-right;
+    animation-delay:0s;
+    transform-origin:top right;
+}
+
+
+.chat .header {
+    margin-bottom: 10px;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.typing-state {
+    color: #333;
+}
+
+.chat li.left .header strong {
+    margin-right: 10px;
+}
+
+.chat li.right .header strong {
+    margin-left: 10px;
+}
+
+.chat .header .fa {
+    margin-right: 3px;
+}
+
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+    
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+    text-align: right;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.panel-body
+{
+    overflow-y: scroll;
+    
+}
+
+
+@keyframes fly-in-from-left {
+  from {
+    transform:translateY(15rem) rotate(15deg);
+    opacity:0;
+  }
+}
+
+@keyframes fly-in-from-right {
+  from {
+    transform:translateY(15rem) rotate(-15deg);
+    opacity:0;
+  }
+}

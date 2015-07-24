@@ -9,6 +9,7 @@ module.exports = function(io) {
     handleDisconnect(socket)
     handleSetUsername(socket)
     handleMessages(socket)
+    handleIsTyping(socket)
   })
 
   var handleConnection = function(socket) {
@@ -57,6 +58,12 @@ module.exports = function(io) {
     })
   }
 
+  var handleIsTyping = function(socket) {
+    socket.on('is typing', function() {
+      socket.broadcast.emit('typing', socket.username)
+    })
+  }
+
   var broadcastConnection = function(socket) {
     io.emit('user connected', {
       username: socket.username,
@@ -65,7 +72,9 @@ module.exports = function(io) {
 
     socket.emit('chat details', {
       username: socket.username,
-      users: users.map(function(s) {return s.username})
+      users: users
+        .filter(function(s) {return s != socket})
+        .map(function(s) {return s.username})
     })
   }
 
@@ -74,7 +83,7 @@ module.exports = function(io) {
   }
 
   var broadcastChangedUsername = function(socket, oldUsername, newUsername) {
-    socket.broadcast.emit('username changed', {
+    io.emit('username changed', {
       old_username: oldUsername,
       new_username: newUsername
     })

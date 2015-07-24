@@ -24,6 +24,9 @@ var lib = {
   messages: function() {
     return fromEvent(this.client, 'message')
   },
+  typing: function() {
+    return fromEvent(this.client, 'typing')
+  },
   setUsername: function(username) {
     var that = this
 
@@ -41,6 +44,15 @@ var lib = {
 
     return new Promise(function(resolve, reject) {
       that.client.emit('message', {to: to, message: message}, function() {
+        resolve()
+      })
+    })
+  },
+  isTyping: function() {
+    var that = this
+
+    return new Promise(function(resolve, reject) {
+      that.client.emit('is typing', function() {
         resolve()
       })
     })
@@ -63,8 +75,11 @@ lib.init()
   lib.messages().forEach(function(data) {
     console.log('message recieved', data)
   })
+  lib.typing().forEach(function(data) {
+    console.log('typing', data)
+  })
 
-  return lib.sendMessage('User1', 'hi')
+  return lib.isTyping()
 })
 .then(function() {
   console.log('done')
