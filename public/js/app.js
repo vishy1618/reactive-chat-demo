@@ -6,7 +6,8 @@ var App = React.createClass({
       currentUser: null,
       messages: {},
       myUsername: '',
-      totalUsers: 0
+      totalUsers: 0,
+      lastMessage: {}
     };
   },
   componentDidMount: function() {
@@ -59,7 +60,7 @@ var App = React.createClass({
 
         messages[data.from].push({from_self: false, message: data.message});
 
-        that.setState({messages: messages});
+        that.setState({messages: messages, lastMessage: data});
       });
   },
   handleUsernameChanges: function() {
@@ -128,7 +129,8 @@ var App = React.createClass({
               <ChatRoster 
                 onCurrentUserChange={this.onCurrentUserChange} 
                 users={this.state.users}
-                currentUser={this.state.currentUser} />
+                currentUser={this.state.currentUser}
+                lastMessage={this.state.lastMessage} />
               {
                 currentUser
                 ? 
