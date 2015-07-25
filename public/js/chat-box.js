@@ -20,8 +20,13 @@ var ChatBox = React.createClass({
 
     theChatStream.css({height: (winHeight - panelHeaderHeight - panelFooterHeight - navbarHeight - 200) + 'px'})
   },
-  componentWillReceiveProps: function(newProps) {
-    this.setState({typing: false});
+  componentWillReceiveProps: function() {
+    this.setState({
+      typing: false
+    });
+  },
+  componentDidUpdate: function() {
+    this.scrollToBottom();
   },
   showContactTyping: function() {
     var that = this;
@@ -65,6 +70,12 @@ var ChatBox = React.createClass({
       .forEach(function(data) {
         that.sendOneMessage(data[1])
       });
+  },
+  scrollToBottom: function() {
+    // var that = this;
+    // $(that.refs.theChatStream.getDOMNode()).animate({
+    //   scrollTop: 20000
+    // }, 0);
   },
   sendOneMessage: function(message) {
     ChatServer.sendMessage(this.props.currentUser, message);

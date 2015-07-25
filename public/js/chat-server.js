@@ -2,7 +2,7 @@ var fromEvent  = Rx.Observable.fromEvent;
 
 var ChatServer = {
   init: function() {
-    var client = this.client = io("http://10.12.20.141:3000")
+    var client = this.client = io("http://localhost:3000")
 
     return new Promise(function(resolve, reject) {
       client.on('error', reject)

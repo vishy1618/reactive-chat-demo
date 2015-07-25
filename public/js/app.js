@@ -58,7 +58,7 @@ var App = React.createClass({
       .forEach(function(data) {
         var messages = that.initializeMessagesFor(data.from);
 
-        messages[data.from].push({from_self: false, message: data.message});
+        messages[data.from] = messages[data.from].concat({from_self: false, message: data.message});
 
         that.setState({messages: messages, lastMessage: data});
       });
@@ -111,7 +111,7 @@ var App = React.createClass({
   onMessageSent: function(message) {
     var currentUser = this.state.currentUser;
     var messages = this.initializeMessagesFor(currentUser);
-    messages[currentUser].push({from_self: true, message: message});
+    messages[currentUser] = messages[currentUser].concat({from_self: true, message: message});
 
     this.setState({messages: messages});
   },
