@@ -9,6 +9,16 @@ var ChatBox = React.createClass({
     this.showContactTyping();
     this.detectTyping();
     this.sendMessages();
+    this.updateChatStreamHeight();
+  },
+  updateChatStreamHeight: function() {
+    var theChatStream       = $(React.findDOMNode(this.refs.theChatStream));
+    var panelFooterHeight   = $('.panel-footer').height();
+    var panelHeaderHeight   = $('.panel-header').height();
+    var navbarHeight        = $('.navbar').height() - 20;
+    var winHeight           = window.innerHeight;
+
+    theChatStream.css({height: (winHeight - panelHeaderHeight - panelFooterHeight - navbarHeight - 200) + 'px'})
   },
   componentWillReceiveProps: function(newProps) {
     this.setState({typing: false});
@@ -78,12 +88,12 @@ var ChatBox = React.createClass({
     var that = this;
 
     var chatbox = (
-      <div className="col-md-9">
+      <div className="col-xs-9">
         <div className="panel panel-primary">
             <div className="panel-heading">
                 {this.props.currentUser}
             </div>
-            <div className="panel-body">
+            <div className="panel-body" ref="theChatStream">
                 <ul className="chat clearfix">
                     {
                       this.props.messages && this.props.messages.map(function(msg, index) {
@@ -123,14 +133,14 @@ var ChatBox = React.createClass({
     )
     
     var noUser = (
-      <div className="col-md-9">
+      <div className="col-xs-9">
         <h1>No Chats</h1>
       </div>
     )
 
     return this.props.currentUser ? chatbox : noUser;
   }
-})
+});
 
 
 
@@ -143,7 +153,7 @@ var ChatBlock = React.createClass({
     return (
       <li className={"clearfix " + cssClass}>
         <span className={"chat-img pull-" + cssClass}>
-          <span className="avatar">{name[0]}</span>
+          <img src="images/avatar.png" alt="" />
         </span>
         <div className="chat-body clearfix">
           <div className="header">
