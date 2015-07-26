@@ -6,15 +6,23 @@
 
 .chat li {
     margin-bottom: 20px;
-    padding: 7px 10px;
+    padding: 5px 5px;
     display: block;
-    width: 60%;
-    background: #EDEDED;
-    min-height: 73px;
-    animation:fly-in-from-left .5s 0s ease both;
-    transform-origin:top left;
+    clear: both;
+    width: 49%;
+    background: #fff;
+    min-height: 60px;
     color: #555;
-    border: 1px solid #E7E7E7;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
+         -o-border-radius: 2px;
+            border-radius: 2px;
+    -webkit-box-shadow: 1px 1px 0px 1px #D8D8D8;
+       -moz-box-shadow: 1px 1px 0px 1px #D8D8D8;
+        -ms-box-shadow: 1px 1px 0px 1px #D8D8D8;
+         -o-box-shadow: 1px 1px 0px 1px #D8D8D8;
+            box-shadow: 1px 1px 0px 1px #D8D8D8;
 
 }
 
@@ -24,39 +32,26 @@
 }
 .chat li.right {
     float: right;
-    animation-name:fly-in-from-right;
-    animation-delay:0s;
-    transform-origin:top right;
     box-shadow: 1px 1px 0px 1px #D8D8D8;
 }
 
 
 .chat .header {
-    margin-bottom: 10px;
-    font-size: 15px;
+    margin-bottom: 5px;
+    font-size: 14px;
     margin-top: 5px;
 }
 
 .typing-state {
-    color: #333;
-}
-
-
-
-
-.chat li.left .chat-img {
-    margin-right: 5px;
-}
-
-
-.chat li.right .chat-img {
-    margin-left: 5px;
+    margin-bottom: 0;
+    color: #8A8A8A;
+    font-size: 13px;
 }
 
 
 .chat li img {
-    width: 56px;
-    height: 56px;
+    width: 50px;
+    height: 50px;
 }
 
 .chat li .header strong {
@@ -73,51 +68,28 @@
     margin-left: 10px;
 }
 
-.chat .header .fa {
-    margin-right: 3px;
-}
 
-
-.chat li.left .chat-body
-{
+.chat li.left .chat-body {
     margin-left: 60px;
-    
 }
 
-.chat li.right .chat-body
-{
+.chat li.right .chat-body {
     margin-right: 60px;
     text-align: right;
 }
 
-
-.chat li .chat-body p
-{
-    margin: 0;
-    color: #777777;
+.chat li .chat-body {
+    word-wrap: break-word;
 }
 
-.panel .slidedown .glyphicon, .chat .glyphicon
-{
-    margin-right: 5px;
+
+.chat li .chat-body p {
+    margin: 0;
+    color: #777777;
 }
 
 .panel-body {
     overflow-y: scroll;
     overflow-x: hidden;
-}
-
-
-@keyframes fly-in-from-left {
-  from {
-    transform:translateY(15rem) rotate(15deg);
-    opacity:0;
-  }
-}
-
-@keyframes fly-in-from-right {
-  from {
-    transform:translateY(15rem) rotate(-15deg);
-    opacity:0;
-  }
+    background-color: #e5e5e5;
 }

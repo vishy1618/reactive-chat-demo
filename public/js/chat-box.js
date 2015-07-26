@@ -10,6 +10,7 @@ var ChatBox = React.createClass({
     this.detectTyping();
     this.sendMessages();
     this.updateChatStreamHeight();
+    this.focusOnInput();
   },
   updateChatStreamHeight: function() {
     var theChatStream       = $(React.findDOMNode(this.refs.theChatStream));
@@ -71,11 +72,13 @@ var ChatBox = React.createClass({
         that.sendOneMessage(data[1])
       });
   },
+  focusOnInput: function() {
+    $(this.refs.theMessageInput.getDOMNode()).focus();
+  },
   scrollToBottom: function() {
-    // var that = this;
-    // $(that.refs.theChatStream.getDOMNode()).animate({
-    //   scrollTop: 20000
-    // }, 0);
+    var that = this;
+    var div  = $(that.refs.theChatStream.getDOMNode());
+    div.scrollTop(div[0].scrollHeight);
   },
   sendOneMessage: function(message) {
     ChatServer.sendMessage(this.props.currentUser, message);
@@ -120,7 +123,7 @@ var ChatBox = React.createClass({
             </div>
             <div className="panel-footer">
                 <div className="input-group">
-                    <input 
+                    <input
                         id="btn-input" 
                         type="text" 
                         className="form-control input" 
@@ -162,7 +165,7 @@ var ChatBlock = React.createClass({
     var cssClass = msg.from_self ? "right" : "left";
     
     return (
-      <li className={"clearfix " + cssClass}>
+      <li className={"animated fadeIn clearfix " + cssClass}>
         <span className={"chat-img pull-" + cssClass}>
           <img src="images/avatar.png" alt="" />
         </span>

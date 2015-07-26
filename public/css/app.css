@@ -11,10 +11,41 @@
   color: #fff;
   background-color: #33B74C;
   border-color: #3FB155;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+      -ms-border-radius: 0;
+       -o-border-radius: 0;
+          border-radius: 0;
 }
 
 .panel-primary {
-  border-color: #3FB155; 
+  border-color: #3FB155;
+}
+
+.panel,
+.panel-heading,
+.form-control,
+.btn {
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+       -o-border-radius: 2px;
+          border-radius: 2px;
+}
+
+.list-group-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.list-group-item {
+  cursor: pointer;
 }
 
 .list-group-item.active,
@@ -22,6 +53,16 @@
 .list-group-item.active:hover {
   background-color: #33B74C;
   border-color: #3FB155; 
+}
+
+.form-control:focus {
+    border-color: #5CB85C;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px #eee,0 0 8px #eee;
+       -moz-box-shadow: inset 0 1px 1px #eee,0 0 8px #eee;
+        -ms-box-shadow: inset 0 1px 1px #eee,0 0 8px #eee;
+         -o-box-shadow: inset 0 1px 1px #eee,0 0 8px #eee;
+            box-shadow: inset 0 1px 1px #eee,0 0 8px #eee;
 }
 
 
@@ -38,8 +79,26 @@ body {
   color: #fff;
 }
 
+h1 {
+  text-align: center;
+  margin-top: 150px;
+}
+
 #main-container {
 	margin-top: 70px;
+}
+
+.flash-msg {
+    text-align: center;
+    margin-top: 150px;
+}
+
+.flash-msg img {
+  margin-right: 10px;
+}
+
+.users-online {
+  font-size: 15px;
 }
 
 

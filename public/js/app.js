@@ -125,7 +125,13 @@ var App = React.createClass({
           <Navbar myUsername={this.state.myUsername} />
           <div className="container" id="main-container">
             <div className="row">
-              <p>{this.state.totalUsers}</p>
+              <div className="col-md-3">
+                  <p className="users-online">Users online: {this.state.totalUsers - 1 > 0 ? this.state.totalUsers - 1 : 0}</p>
+              </div>
+              <div className="col-md-9">
+              </div>
+            </div>
+            <div className="row">
               <ChatRoster 
                 onCurrentUserChange={this.onCurrentUserChange} 
                 users={this.state.users}
@@ -148,7 +154,7 @@ var App = React.createClass({
       )
     } else {
       return (
-        <h1>Loading</h1>
+        <h1 className="animated zoomIn">Firing up!</h1>
       )  
     }
 	}
