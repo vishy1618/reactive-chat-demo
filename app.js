@@ -2,7 +2,7 @@ var express   = require('express')
 var socketio  = require('socket.io')
 var server    = require('./server')
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 var app = express()
 
