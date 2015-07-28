@@ -15,9 +15,11 @@ var ChatRoster = React.createClass({
 
     // if a new message has arrived, and it is not from the current user
     // add an unread notification for that user
-    if (newProps.lastMessage.from != newProps.currentUser) {
-      unreadNotifications[newProps.lastMessage.from] = 
-        (unreadNotifications[newProps.lastMessage.from] || 0) + 1;
+    if (newProps.lastMessage !== this.props.lastMessage) {
+      if (newProps.lastMessage.from != newProps.currentUser) {
+        unreadNotifications[newProps.lastMessage.from] = 
+          (unreadNotifications[newProps.lastMessage.from] || 0) + 1;
+      }
     }
 
     this.setState({unreadNotifications: unreadNotifications});
