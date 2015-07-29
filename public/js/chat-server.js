@@ -1,58 +1,58 @@
-var fromEvent  = Rx.Observable.fromEvent;
+var rxFromEvent   = Rx.Observable.fromEvent;
+var rxCreate      = Rx.Observable.create;
+
+var initSubject = new Rx.Subject();
+var connections = new Rx.Subject();
+var disconnections = new Rx.Subject();
+var usernameChanges = new Rx.Subject();
+var messages = new Rx.Subject();
+var typing = new Rx.Subject();
 
 var ChatServer = {
   init: function() {
-    var client = this.client = io()
+    var client = this.client = io();
 
-    return new Promise(function(resolve, reject) {
-      client.on('error', reject)
+    client.on('error', initSubject.onError.bind(initSubject));
 
-      client.on('chat details', resolve)
-    })
+    client.on('chat details', initSubject.onNext.bind(initSubject));
+
+    rxFromEvent(this.client, 'user connected').subscribe(connections);
+    rxFromEvent(this.client, 'user disconnected').subscribe(disconnections);
+    rxFromEvent(this.client, 'username changed').subscribe(usernameChanges);
+    rxFromEvent(this.client, 'message').subscribe(messages);
+    rxFromEvent(this.client, 'typing').subscribe(typing);
   },
+  initStream: initSubject.asObservable(),
   connections: function() {
-    return fromEvent(this.client, 'user connected')
+    return connections.asObservable();
   },
   disconnections: function() {
-    return fromEvent(this.client, 'user disconnected')
+    return disconnections.asObservable();
   },
   usernameChanges: function() {
-    return fromEvent(this.client, 'username changed')
+    return usernameChanges.asObservable();
   },
   messages: function() {
-    return fromEvent(this.client, 'message')
+    return messages.asObservable();
   },
   typing: function() {
-    return fromEvent(this.client, 'typing')
+    return typing.asObservable();
   },
   setUsername: function(username) {
-    var that = this
+    var that = this;
 
-    return new Promise(function(resolve, reject) {
-      that.client.emit('username', username, function(response, error) {
-        if (error)
-          reject(error)
-        else
-          resolve(response)
-      })
-    })
+    that.client.emit('username', username, function(response, error) {
+    });
   },
   sendMessage: function(to, message) {
-    var that = this
+    var that = this;
 
-    return new Promise(function(resolve, reject) {
-      that.client.emit('message', {to: to, message: message}, function() {
-        resolve()
-      })
-    })
+    that.client.emit('message', {to: to, message: message}, function() {
+    });
   },
   isTyping: function(to) {
-    var that = this
-
-    return new Promise(function(resolve, reject) {
-      that.client.emit('is typing', to, function() {
-        resolve()
-      })
-    })
+    var that = this;
+    that.client.emit('is typing', to, function() {
+    });
   }
 }

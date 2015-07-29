@@ -9,7 +9,7 @@ var Navbar = React.createClass({
   },
   onSubmit: function(e) {
     e.preventDefault();
-    ChatServer.setUsername(this.state.myUsername);
+    this.props.onMyUsernameChange(this.state.myUsername);
   },
   render: function() {
     return (

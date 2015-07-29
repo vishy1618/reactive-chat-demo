@@ -67,17 +67,13 @@ module.exports = function(io) {
   }
 
   var broadcastConnection = function(socket) {
-    io.emit('user connected', {
-      username: socket.username,
-      total_users: users.length
-    })
+    socket.broadcast.emit('user connected', socket.username)
 
     socket.emit('chat details', {
       username: socket.username,
       users: users
         .filter(function(s) {return s != socket})
-        .map(function(s) {return s.username}),
-      total_users: users.length
+        .map(function(s) {return s.username})
     })
   }
 
@@ -86,7 +82,7 @@ module.exports = function(io) {
   }
 
   var broadcastChangedUsername = function(socket, oldUsername, newUsername) {
-    io.emit('username changed', {
+    socket.broadcast.emit('username changed', {
       old_username: oldUsername,
       new_username: newUsername
     })

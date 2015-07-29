@@ -6,48 +6,31 @@ var App = React.createClass({
       currentUser: null,
       messages: {},
       myUsername: '',
-      totalUsers: 0,
       lastMessage: {}
     };
   },
   componentDidMount: function() {
     this.initializeApp();
-    this.handleConnections();
-    this.handleDisconnections();
     this.handleIncomingMessages();
     this.handleUsernameChanges();
   },
   initializeApp: function() {
     var that = this;
 
-    ChatServer.init()
-    .then(function(info) {
+    ChatServer.init();
+
+    appInitStream.subscribe(function(info) {
       that.setState({
         initialized: true,
-        users: info.users,
-        myUsername: info.username,
-        totalUsers: info.total_users
+        myUsername: info.username
       })
     });
-  },
-  handleConnections: function() {
-    var that = this;
 
-    ChatServer.connections().forEach(function(info) {
-      that.state.users.push(info.username)
-      that.setState({users: that.state.users, totalUsers: info.total_users})
-    });
-  },
-  handleDisconnections: function() {
-    var that = this;
-
-    ChatServer.disconnections().forEach(function(user) {
-      that.state.users.splice(that.state.users.indexOf(user), 1)
+    onlineUsersStream.subscribe(function(users) {
       that.setState({
-        users: that.state.users,
-        currentUser: that.state.currentUser == user ? null : that.state.currentUser,
-        totalUsers: that.state.totalUsers - 1
-      })
+        users: users,
+        totalUsers: users.length
+      });
     });
   },
   handleIncomingMessages: function() {
@@ -55,7 +38,7 @@ var App = React.createClass({
 
     // for receiving a message
     ChatServer.messages()
-      .forEach(function(data) {
+      .subscribe(function(data) {
         var messages = that.initializeMessagesFor(data.from);
 
         messages[data.from] = messages[data.from].concat({from_self: false, message: data.message});
@@ -66,38 +49,32 @@ var App = React.createClass({
   handleUsernameChanges: function() {
     var that = this;
     
-    ChatServer.usernameChanges()
+    usernameChangeStream
       .forEach(function(data) {
         var oldUsername = data.old_username;
         var newUsername = data.new_username;
 
-        if (oldUsername == that.state.myUsername) {
-          that.setState({myUsername: newUsername});
-        } else {
-          var users       = that.state.users;
-          var messages    = that.state.messages;
-          var currentUser = that.state.currentUser;
+        var messages    = that.state.messages;
+        var currentUser = that.state.currentUser;
 
-          if (users.indexOf(oldUsername) != -1) {
-            users[users.indexOf(oldUsername)] = newUsername;
-          }
-
-          if (messages[oldUsername]) {
-            messages[newUsername] = messages[oldUsername];
-            delete messages[oldUsername];
-          }
-
-          if (currentUser === oldUsername) {
-            currentUser = newUsername;
-          }
-
-          that.setState({
-            users: users,
-            messages: messages,
-            currentUser: currentUser
-          });
+        if (messages[oldUsername]) {
+          messages[newUsername] = messages[oldUsername];
+          delete messages[oldUsername];
         }
+
+        if (currentUser === oldUsername) {
+          currentUser = newUsername;
+        }
+
+        that.setState({
+          messages: messages,
+          currentUser: currentUser
+        });
       })
+  },
+  onMyUsernameChange: function(username) {
+    ChatServer.setUsername(username);
+    this.setState({myUsername: username});
   },
   onCurrentUserChange: function(user) {
     this.setState({currentUser: user})
@@ -122,11 +99,13 @@ var App = React.createClass({
     if (this.state.initialized) {
       return (
         <div>
-          <Navbar myUsername={this.state.myUsername} />
+          <Navbar 
+            myUsername={this.state.myUsername}
+            onMyUsernameChange={this.onMyUsernameChange} />
           <div className="container" id="main-container">
             <div className="row">
               <div className="col-md-3">
-                  <p className="users-online">Users online: {this.state.totalUsers - 1 > 0 ? this.state.totalUsers - 1 : 0}</p>
+                  <p className="users-online">Users online: {this.state.users.length}</p>
               </div>
               <div className="col-md-9">
               </div>

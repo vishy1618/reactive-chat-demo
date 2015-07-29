@@ -56,7 +56,7 @@ var ChatBox = React.createClass({
     this.keyUpStream()
       .debounce(300)
       .filter(function(data) {return data[0] != 13})
-      .forEach(function(data) {
+      .subscribe(function(data) {
         ChatServer.isTyping(that.props.currentUser);
       })
   },
@@ -68,7 +68,7 @@ var ChatBox = React.createClass({
       .filter(function(data) {
         return data[0] === 13 && data[1].length;
       })
-      .forEach(function(data) {
+      .subscribe(function(data) {
         that.sendOneMessage(data[1])
       });
   },

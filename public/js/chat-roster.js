@@ -4,6 +4,9 @@ var ChatRoster = React.createClass({
       unreadNotifications: {}
     }
   },
+  componentDidMount: function() {
+    var that = this;
+  },
   componentWillReceiveProps: function(newProps) {
     // if current user has changed, remove unread notifications
     // for the new user
@@ -30,7 +33,7 @@ var ChatRoster = React.createClass({
   render: function() {
     var that = this;
     var currentUser = this.props.currentUser;
-    var users = this.props.users; 
+    var users = this.props.users;
 
     return (
       <div className="col-sm-3">
