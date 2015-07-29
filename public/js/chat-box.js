@@ -102,7 +102,7 @@ var ChatBox = React.createClass({
     var that = this;
 
     var chatbox = (
-      <div className="col-xs-9">
+      <div className="col-sm-9">
         <div className="panel panel-primary">
             <div className="panel-heading">
                 {this.props.currentUser}

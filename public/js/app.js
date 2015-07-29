@@ -148,7 +148,7 @@ var App = React.createClass({
                 :
                 <div />
               }
-            </div>    
+            </div>
           </div>
         </div>
       )

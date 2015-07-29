@@ -93,3 +93,9 @@
     overflow-x: hidden;
     background-color: #e5e5e5;
 }
+
+@media (max-width: 768px) {
+    .chat li {
+        width: 70%;
+    }
+}

@@ -33,7 +33,7 @@ var ChatRoster = React.createClass({
     var users = this.props.users; 
 
     return (
-      <div className="col-xs-3">
+      <div className="col-sm-3">
         <div className="list-group">
           {
             users.map(function(user) {
