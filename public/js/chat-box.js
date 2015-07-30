@@ -40,7 +40,7 @@ var ChatBox = React.createClass({
 
     var notTypingStream = isTypingStream
       .debounce(1500)
-      .map(function(bool) {return !bool});
+      .map(function() {return false});
 
     var typingStream = Rx.Observable.merge(isTypingStream, notTypingStream);
 
